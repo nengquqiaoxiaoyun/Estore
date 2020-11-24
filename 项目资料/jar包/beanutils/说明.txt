@@ -1,0 +1,3 @@
+beanutils从1.8.3以后，把jar包中的commons-collections包中的所有类抽了出来，
+因此在使用比1.8.3更高版本的beanutils时，需要单独导入commons-collections.jar,
+在1.9.2版本中有这个包
