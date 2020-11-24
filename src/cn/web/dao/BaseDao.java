@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * 提供基本的增删改查功能
+ * 对于可能发生的异常交由调用处统一处理
  * @author: huakaimay
  * @since: 2020-11-24
  */
@@ -40,8 +42,7 @@ public abstract class BaseDao<T> {
         Connection con = JdbcUtils.getConnection();
         try {
             queryRunner.update(con, sql, args);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (Exception throwables) {
             throw new RuntimeException(throwables);
         }
 
@@ -59,7 +60,6 @@ public abstract class BaseDao<T> {
             return queryRunner.query(con, sql, userBeanHandler, args);
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -77,7 +77,7 @@ public abstract class BaseDao<T> {
         try {
             BeanListHandler<T> listBeanHandler = new BeanListHandler(cls);
             return queryRunner.query(con, sql, listBeanHandler, args);
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             throw new RuntimeException(throwables);
         }
     }
@@ -88,7 +88,7 @@ public abstract class BaseDao<T> {
         try {
             ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
             return queryRunner.query(con, sql, scalarHandler, args);
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             throw new RuntimeException(throwables);
         }
     }

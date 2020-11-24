@@ -19,7 +19,6 @@ public class TranstionFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("filter执行了");
         try {
             chain.doFilter(request, response);
             JdbcUtils.commit();
