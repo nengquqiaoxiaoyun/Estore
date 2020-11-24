@@ -6,8 +6,6 @@ import org.apache.commons.dbutils.DbUtils;
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -54,10 +52,7 @@ public class JdbcUtils {
     public static DataSource getDataSource() {
         return dataSource;
     }
-
-    public static void close(Connection con, PreparedStatement ps, ResultSet rs) {
-        DbUtils.closeQuietly(con, ps, rs);
-    }
+    
 
     /**
      * 全局过滤自动提交
