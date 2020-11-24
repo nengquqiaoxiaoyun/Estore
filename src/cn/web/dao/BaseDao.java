@@ -4,6 +4,7 @@ import cn.web.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -76,6 +77,17 @@ public abstract class BaseDao<T> {
         try {
             BeanListHandler<T> listBeanHandler = new BeanListHandler(cls);
             return queryRunner.query(con, sql, listBeanHandler, args);
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
+        }
+    }
+
+    public Object genericSelect(String sql, Object... args) {
+        Connection con = JdbcUtils.getConnection();
+
+        try {
+            ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
+            return queryRunner.query(con, sql, scalarHandler, args);
         } catch (SQLException throwables) {
             throw new RuntimeException(throwables);
         }
