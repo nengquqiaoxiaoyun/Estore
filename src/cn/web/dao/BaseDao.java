@@ -19,16 +19,12 @@ public abstract class BaseDao<T> {
 
     private Class<T> cls;
     private QueryRunner queryRunner = new QueryRunner();
-    private QueryRunner queryRunnerWithDataSource = new QueryRunner(JdbcUtils.getDataSource());
 
 
     public QueryRunner getQueryRunner() {
         return queryRunner;
     }
 
-    public QueryRunner getQueryRunnerWithDataSource() {
-        return queryRunnerWithDataSource;
-    }
 
     {
         ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
@@ -39,11 +35,13 @@ public abstract class BaseDao<T> {
     /**
      * 增删改统一操作
      */
-    public void update(Connection con, String sql, Object... args) {
+    public void update(String sql, Object... args) {
+        Connection con = JdbcUtils.getConnection();
         try {
             queryRunner.update(con, sql, args);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new RuntimeException(throwables);
         }
 
     }
@@ -52,8 +50,8 @@ public abstract class BaseDao<T> {
     /**
      * 查询单个对象
      */
-    public T getBean(Connection con, String sql, Object... args) {
-
+    public T getBean(String sql, Object... args) {
+        Connection con = JdbcUtils.getConnection();
         try {
 
             BeanHandler<T> userBeanHandler = new BeanHandler<T>(cls);
@@ -61,27 +59,26 @@ public abstract class BaseDao<T> {
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        return null;
 
     }
 
     /**
      * 查询多个对象
-     * 不需要传connectin 自己关闭
      *
      * @return List<T>
      */
     public List<T> getBeanList(String sql, Object... args) {
+        Connection con = JdbcUtils.getConnection();
 
         try {
             BeanListHandler<T> listBeanHandler = new BeanListHandler(cls);
-            return queryRunnerWithDataSource.query(sql, listBeanHandler, args);
+            return queryRunner.query(con, sql, listBeanHandler, args);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new RuntimeException(throwables);
         }
-        return null;
     }
 
 

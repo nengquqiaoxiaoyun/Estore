@@ -21,7 +21,6 @@ public class JdbcUtils {
     private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
     static {
-
         try {
             InputStream resourceAsStream = JdbcUtils.class.getClassLoader().getResourceAsStream("druid.properties");
             Properties properties = new Properties();
@@ -34,11 +33,20 @@ public class JdbcUtils {
 
     }
 
-    public static Connection getConnection() throws SQLException {
+    /**
+     * 获取连接，并且关闭自动提交
+     * @return
+     */
+    public static Connection getConnection() {
         Connection connection = threadLocal.get();
         if (connection == null) {
-            connection = dataSource.getConnection();
-            threadLocal.set(connection);
+            try {
+                connection = dataSource.getConnection();
+                threadLocal.set(connection);
+                connection.setAutoCommit(false);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return connection;
     }
@@ -47,8 +55,50 @@ public class JdbcUtils {
         return dataSource;
     }
 
-    public void close(Connection con, PreparedStatement ps, ResultSet rs) {
+    public static void close(Connection con, PreparedStatement ps, ResultSet rs) {
         DbUtils.closeQuietly(con, ps, rs);
+    }
+
+    /**
+     * 全局过滤自动提交
+     * cn.web.filter.TranstionFilter
+     */
+    public static void commit() {
+        Connection connection = threadLocal.get();
+        try {
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            DbUtils.closeQuietly(connection);
+        }
+        threadLocal.remove();
+    }
+
+    /**
+     * 全局过滤自动回滚
+     * cn.web.filter.TranstionFilter
+     */
+    public static void rollback() {
+        Connection connection = threadLocal.get();
+        try {
+            connection.rollback();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            DbUtils.closeQuietly(connection);
+        }
+        threadLocal.remove();
     }
 
 
