@@ -43,6 +43,10 @@ public class JdbcUtils {
         return connection;
     }
 
+    public static DataSource getDataSource() {
+        return dataSource;
+    }
+
     public void close(Connection con, PreparedStatement ps, ResultSet rs) {
         DbUtils.closeQuietly(con, ps, rs);
     }
