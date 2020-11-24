@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Servlet Filter implementation class EncodeFilter
  */
-@WebFilter(urlPatterns = "/")
+@WebFilter(urlPatterns = "/*")
 public class EncodeFilter implements Filter {
 
     /**
