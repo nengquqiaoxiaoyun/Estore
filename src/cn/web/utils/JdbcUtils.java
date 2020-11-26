@@ -33,6 +33,7 @@ public class JdbcUtils {
 
     /**
      * 获取连接，并且关闭自动提交
+     *
      * @return
      */
     public static Connection getConnection() {
@@ -52,7 +53,7 @@ public class JdbcUtils {
     public static DataSource getDataSource() {
         return dataSource;
     }
-    
+
 
     /**
      * 全局过滤自动提交
@@ -60,16 +61,20 @@ public class JdbcUtils {
      */
     public static void commit() {
         Connection connection = threadLocal.get();
+        System.out.println("进入过滤器");
         try {
-            connection.commit();
+            if (connection != null)
+                connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             try {
-                connection.setAutoCommit(true);
+                if (connection != null)
+                    connection.setAutoCommit(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+
             DbUtils.closeQuietly(connection);
         }
         threadLocal.remove();
@@ -82,12 +87,14 @@ public class JdbcUtils {
     public static void rollback() {
         Connection connection = threadLocal.get();
         try {
-            connection.rollback();
+            if (connection != null)
+                connection.rollback();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             try {
-                connection.setAutoCommit(true);
+                if (connection != null)
+                    connection.setAutoCommit(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

@@ -17,13 +17,13 @@
         <div class="usBox_1">
             <div class="login_tab">
                 <ul>
-                    <li onclick="location.href='login.jsp';">
+                    <li onclick="location.href='${root}/login.jsp';">
                         <a href="javascript:;">用户登录</a>
                     </li>
                     <li class="active">用户注册</li>
                 </ul>
             </div>
-            <form id="registForm" action="#" method="post" name="formUser"
+            <form id="registForm" action="${root}/servlet/user?methodName=register" method="post" name="formUser"
                   onsubmit="return register();">
                 <table width="100%" border="0" align="left" cellpadding="5"
                        cellspacing="3">
@@ -70,19 +70,19 @@
                     </tr>
                     <tr>
                         <td align="right">确认密码</td>
-                        <td><input name="confirm_password" type="password"
+                        <td><input name="confirmPassword" type="password"
                                    id="conform_password"
                                    onblur="check_conform_password(this.value);" class="inputBg"/>
                             <span style="color:#FF0000"
                                   id="conform_password_notice"> *</span></td>
                     </tr>
-                    <tr>
-                        <td align="right">验证码</td>
-                        <td><input type="text" size="8" name="captcha" id="captcha"
-                                   class="inputBg" onblur="check_captcha(this.value);"/> <span style="color:#FF0000"
-                                                                                               id="captcha_notice"> *</span><input
-                                type="button" id="mybtn" value="获取手机验证码"></td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <td align="right">验证码</td>--%>
+<%--                        <td><input type="text" size="8" name="captcha" id="captcha"--%>
+<%--                                   class="inputBg" onblur="check_captcha(this.value);"/> <span style="color:#FF0000"--%>
+<%--                                                                                               id="captcha_notice"> *</span><input--%>
+<%--                                type="button" id="mybtn" value="获取手机验证码"></td>--%>
+<%--                    </tr>--%>
                     <!-- <tr>
                         <td align="right"></td>
                         <td><img src="validatecode.jsp"

@@ -15,4 +15,16 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
         String ph = (String) super.genericSelect(sql, phone);
         return ph;
     }
+
+    @Override
+    public void register(User user) {
+        String sql = "insert into user (email, nickname, password, phone) values (?, ?, ?, ?)";
+        super.update(sql, user.getEmail(), user.getNickname(), user.getPassword(), user.getPhone());
+    }
+
+    @Override
+    public User findUser(String phone, String password) {
+        String sql = "select phone, email, nickname, password from user where phone = ? and password = ?";
+        return super.getBean(sql, phone, password);
+    }
 }

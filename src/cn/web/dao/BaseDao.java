@@ -9,12 +9,12 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * 提供基本的增删改查功能
  * 对于可能发生的异常交由调用处统一处理
+ *
  * @author: huakaimay
  * @since: 2020-11-24
  */
@@ -55,10 +55,8 @@ public abstract class BaseDao<T> {
     public T getBean(String sql, Object... args) {
         Connection con = JdbcUtils.getConnection();
         try {
-
             BeanHandler<T> userBeanHandler = new BeanHandler<T>(cls);
             return queryRunner.query(con, sql, userBeanHandler, args);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

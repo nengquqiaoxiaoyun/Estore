@@ -147,7 +147,7 @@
 				邮编：100096
 				<span id="cnzz_stat_icon_4617777">
 					<a href="http://www.cnzz.com/stat/website.php?web_id=4617777" target="_blank" title="站长统计">
-						<img border="0" hspace="0" vspace="0" src="images/pic1.gif">
+						<img border="0" hspace="0" vspace="0" src="${root}/images/pic1.gif">
 					</a>
 				</span>
 				<br/>
