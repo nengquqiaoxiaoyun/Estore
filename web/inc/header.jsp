@@ -114,13 +114,27 @@
         String className = isIndex ? "cur" : "";
     %>
     <div class="block" style="width:<%=width%>">
-        <div class="menu">
-            <a id="menu_index" href="index.jsp" class="<%=className%>">首页</a> <a
-                href="javascript:;">设计师</a> <a href="javascript:;">化妆品</a> <a
-                href="javascript:;">鞋包配饰</a> <a href="javascript:;">居家母婴</a> <a
-                href="javascript:;">服饰内衣</a> <a href="javascript:;">团购商品</a>
+        <div class="menu" id="mymenu">
+            <a id="menu_index" href="index.jsp" class="<%=className%>">首页</a>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="${root}/js/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+
+    $.ajax({
+        url: "servlet/category?methodName=listCategory",
+        dataType: "json",
+        type: "get",
+        success: function (res) {
+            for(let i = 0; i < res.length; i ++) {
+                console.log(res[i].cname)
+              $("#mymenu").append($("<a href='javascript:;'>" + res[i].cname + "</a>"))
+            }
+        }
+    })
+
+</script>
+
 <link href="${root}/themes/ecmoban_qq/images/qq.css" rel="stylesheet"
       type="text/css"/>
