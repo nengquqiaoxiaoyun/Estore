@@ -2,10 +2,8 @@ package cn.web.service.impl;
 
 import cn.web.dao.CategoryDao;
 import cn.web.dao.impl.CategoryDaoImpl;
-import cn.web.entity.Category;
+import cn.web.entity.Good;
 import cn.web.service.CategoryService;
-
-import java.util.List;
 
 /**
  * @author: huakaimay
@@ -18,4 +16,6 @@ public class CategoryServiceImpl implements CategoryService {
     public String listCategory() {
         return categoryDao.listCategory();
     }
+
+
 }

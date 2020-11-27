@@ -15,7 +15,7 @@
 			<div class="block box">
 				<div class="blank"></div>
 				<div id="ur_here">
-					当前位置: <a href="index.jsp">首页</a><code>&gt;</code>我的购物车
+					当前位置: <a href="${root}/index.jsp">首页</a><code>&gt;</code>我的购物车
 				</div>
 			</div>
 			<div class="blank"></div>

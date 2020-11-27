@@ -30,8 +30,8 @@
                             </c:if>
 
                             <c:if test="${ empty user}">
-                                <a href="login.jsp">登录</a>
-                                | <a href="register.jsp">注册</a>
+                                <a href="${root}/login.jsp">登录</a>
+                                | <a href="${root}/register.jsp">注册</a>
                             </c:if>
                         </font>
                     </div>
@@ -72,7 +72,7 @@
                     </ul>
                     <div class="header_r">
                         <a href="${root}/orders.jsp">我的订单</a>
-                        <a href="${root}/goods.jsp">商品列表</a>
+                        <a href="${root}/servlet/goods?methodName=listGoods">商品列表</a>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <li id="ECS_CARTINFO">
                     <div class="top_cart">
                         <img src="${root}/themes/ecmoban_jumei/images/cart.gif"/>
-                        <a href="cart.jsp" class="shopborder">去购物车结算</a>
+                        <a href="${root}/cart.jsp" class="shopborder">去购物车结算</a>
                     </div>
                 </li>
             </ul>
@@ -123,12 +123,11 @@
 <script type="text/javascript">
 
     $.ajax({
-        url: "servlet/category?methodName=listCategory",
+        url: "${root}/servlet/category?methodName=listCategory",
         dataType: "json",
         type: "get",
         success: function (res) {
             for(let i = 0; i < res.length; i ++) {
-                console.log(res[i].cname)
               $("#mymenu").append($("<a href='javascript:;'>" + res[i].cname + "</a>"))
             }
         }

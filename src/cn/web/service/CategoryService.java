@@ -1,8 +1,6 @@
 package cn.web.service;
 
-import cn.web.entity.Category;
-
-import java.util.List;
+import cn.web.entity.Good;
 
 /**
  * @author: huakaimay
@@ -13,4 +11,6 @@ public interface CategoryService {
      * 查找所有的分类
      */
     String listCategory();
+
+
 }

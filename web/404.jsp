@@ -37,7 +37,7 @@ A:hover {COLOR: red}
 				<TD vAlign=top height=270>
 					<DIV align=center>
 						<BR>
-						<IMG height=211 src="images/error/error.gif" width=329><BR>
+						<IMG height=211 src="${root}/images/error/error.gif" width=329><BR>
 						<BR>
 						<TABLE cellSpacing=0 cellPadding=0 width="80%" border=0>
 							<TBODY>
@@ -45,7 +45,7 @@ A:hover {COLOR: red}
 									<TD>
 										<FONT class=p2>&nbsp;&nbsp;&nbsp; 
 											<FONT color=#ff0000>
-												<IMG height=13 src="images/error/emessage.gif" width=12>&nbsp;无法访问！
+												<IMG height=13 src="${root}/images/error/emessage.gif" width=12>&nbsp;无法访问！
 												<span id="s" style="color: orange;font-size: 28px;">10</span> 秒后跳到
 												<a href="${pageContext.request.contextPath }/index.jsp">首页</a>
 											</FONT>
@@ -75,8 +75,8 @@ A:hover {COLOR: red}
 							<TBODY>
 								<TR>
 									<TD width=6><IMG height=26
-										src="images/error/left.gif" width=7></TD>
-									<TD background="images/error/bg.gif">
+										src="${root}/images/error/left.gif" width=7></TD>
+									<TD background="${root}/images/error/bg.gif">
 										<DIV align=center>
 											<font class=p6> <a
 												href="${pageContext.request.contextPath }/index.jsp">返回首页</a>
@@ -84,7 +84,7 @@ A:hover {COLOR: red}
 											</font>
 										</DIV>
 									</TD>
-									<TD width=7><IMG src="images/error/right.gif"></TD>
+									<TD width=7><IMG src="${root}/images/error/right.gif"></TD>
 								</TR>
 							</TBODY>
 						</TABLE>
