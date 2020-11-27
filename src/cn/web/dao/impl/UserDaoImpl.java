@@ -24,7 +24,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public User findUser(String phone, String password) {
-        String sql = "select phone, email, nickname, password from user where phone = ? and password = ?";
+        String sql = "select id, phone, email, nickname, password from user where phone = ? and password = ?";
         return super.getBean(sql, phone, password);
     }
 }

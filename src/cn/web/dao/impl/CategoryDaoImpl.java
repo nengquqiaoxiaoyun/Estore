@@ -5,6 +5,7 @@ import cn.web.dao.CategoryDao;
 import cn.web.entity.Category;
 import cn.web.utils.JedisUtils;
 import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
 import java.util.List;
@@ -35,4 +36,6 @@ public class CategoryDaoImpl extends BaseDao<Category> implements CategoryDao {
 
         return categoryList;
     }
+
+
 }

@@ -79,7 +79,7 @@
         </div>
         <div class="clear_f"></div>
         <div class="header_top logo_wrap clearfix">
-            <a class="logo_new" href="index.jsp"><img
+            <a class="logo_new" href="${root}/index.jsp"><img
                     src="${root}/themes/ecmoban_jumei/images/logo.gif"/></a>
             <div class="ser_n">
                 <form id="searchForm" class="searchBox clearfix" name="searchForm"
@@ -115,7 +115,7 @@
     %>
     <div class="block" style="width:<%=width%>">
         <div class="menu" id="mymenu">
-            <a id="menu_index" href="index.jsp" class="<%=className%>">首页</a>
+            <a id="menu_index" href="${root}/index.jsp" class="<%=className%>">首页</a>
         </div>
     </div>
 </div>

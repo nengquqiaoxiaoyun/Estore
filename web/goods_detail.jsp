@@ -80,7 +80,7 @@
                 <ul class="bnt_ul">
                     <li class="padd">
                         <!-- 购买按钮 -->
-                        <a href="${root}/servlet/cart?methodName=addGood">
+                        <a href="${root}/servlet/cart?methodName=addGood&goodId=${requestScope.goodDetail.id}">
                             <img src="${root}/themes/ecmoban_jumei/images/goumai2.gif"/>
                         </a>
                     </li>
