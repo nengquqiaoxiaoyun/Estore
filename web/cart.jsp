@@ -55,10 +55,11 @@
                                                onblur="udpateCart(this.value, ${cart.gid})"
                                                style="text-align:center;"/>
                                     </td>
-                                    <td id="totalPrice${cart.gid}" align="center" bgcolor="#ffffff">${cart.good.estoreprice * cart.buynum}元
+                                    <td id="totalPrice${cart.gid}" align="center"
+                                        bgcolor="#ffffff">${cart.good.estoreprice * cart.buynum}元
                                     </td>
                                     <td align="center" bgcolor="#ffffff">
-                                        <a href="javascript:;" class="f6">删除</a>
+                                        <a onclick="deleteGood(${cart.gid}, this)" class="f6">删除</a>
                                     </td>
                                 </tr>
                                 <c:set var="totalPrice"
@@ -101,13 +102,26 @@
             success: function (res) {
                 let data = eval('(' + res + ')');
                 $("#totalPrice" + gid).html(data.totalPrice)
-                //修改页面上所有商品的总价
                 $("#total").html(data.total)
-                //修改页面上所有商品的节省金额
                 $("#savePrice").html(data.savePrice)
             }
         })
+    }
 
+    function deleteGood(gid, element) {
+        console.log(gid)
+        $.ajax({
+            url: "${root}/servlet/cart?methodName=deleteGood",
+            type: "get",
+            typeData: "json",
+            data: {"goodId": gid},
+            success: function (res) {
+                res = eval('(' + res + ')')
+                element.parentElement.parentElement.remove()
+                $("#total").html(res.total)
+                $("#savePrice").html(res.savePrice)
+            }
+        })
     }
 </script>
 </html>

@@ -53,14 +53,34 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String updateCartNum(Cart cart) {
-        cartDao.updateCartNum(cart);
-        try {
-            JdbcUtils.getConnection().commit();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public String deleteCartByGid(int uid, String gid) {
+        cartDao.deleteCartByGid(uid, gid);
+
+        List<Cart> carts = listCartByUid(uid);
+        carts.forEach(System.out::println);
+        // 购物金额
+        double total = 0d;
+        // 节省金额
+        double savePrice = 0d;
+
+        for (Cart ct : carts) {
+
+            int buynum = ct.getBuynum();
+            double marketprice = ct.getGood().getMarketprice();
+            double estoreprice = ct.getGood().getEstoreprice();
+
+            total += estoreprice * buynum;
+            savePrice += buynum * (marketprice - estoreprice);
         }
 
+        String json = "{\"total\":\"" + total + "\",\"savePrice\":\"" + savePrice + "\"}";
+        return json;
+
+    }
+
+    @Override
+    public String updateCartNum(Cart cart) {
+        cartDao.updateCartNum(cart);
 
         List<Cart> carts = listCartByUid(cart.getUid());
 

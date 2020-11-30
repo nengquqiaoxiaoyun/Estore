@@ -1,6 +1,5 @@
 package cn.web.dao;
 
-import cn.web.dto.CartGood;
 import cn.web.entity.Cart;
 
 import java.util.List;
@@ -36,4 +35,6 @@ public interface CartDao {
      * 查询某个用户的购物车
      */
     Cart listCartByGidAndUid(Cart cart);
+
+    void deleteCartByGid(int uid, String gid);
 }

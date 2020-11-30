@@ -43,4 +43,10 @@ public interface CartService {
      * 查询某个用户的购物车
      */
     Cart listCartByGidAndUid(Cart cart);
+
+    /**
+     * 根据gid删除购物车
+     * @return 总金额和节省后的金额（json）
+     */
+    String deleteCartByGid(int uid, String gid);
 }

@@ -69,15 +69,23 @@ public class CartDaoImpl extends BaseDao<Cart> implements CartDao {
     }
 
     @Override
-    public void updateCartNum(Cart cart ) {
+    public void updateCartNum(Cart cart) {
         String sql = "update cart set buynum = ? where uid = ? and gid = ?";
         super.update(sql, cart.getBuynum(), cart.getUid(), cart.getGid());
+        JdbcUtils.commit();
     }
 
     @Override
     public Cart listCartByGidAndUid(Cart cart) {
         String sql = "SELECT uid, gid, buynum, g.name, g.marketprice, g.estoreprice, g.imgurl " +
                 "FROM cart, goods AS g WHERE cart.gid = g.id AND uid = ? and gid = ?";
-        return super.getBean(sql,cart.getUid(), cart.getGid());
+        return super.getBean(sql, cart.getUid(), cart.getGid());
+    }
+
+    @Override
+    public void deleteCartByGid(int uid, String gid) {
+        String sql = "delete from cart where gid = ? and uid = ?";
+        super.update(sql, gid, uid);
+        JdbcUtils.commit();
     }
 }

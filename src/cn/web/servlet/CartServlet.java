@@ -25,6 +25,32 @@ public class CartServlet extends BaseServlet {
 
     private CartService cartService = new CartServiceImpl();
 
+
+    /**
+     * 根据gid删除商品，删除后应该返回删除后的总金额和节省后的金额
+     */
+    public void deleteGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String goodId = request.getParameter("goodId");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        // 还未登录 先登录
+        if (user == null) {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        int id = user.getId();
+        System.out.println(id + "---" + goodId);
+        String json = cartService.deleteCartByGid(id, goodId);
+        response.getWriter().write(json);
+
+
+    }
+
     public void addGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
@@ -39,7 +65,6 @@ public class CartServlet extends BaseServlet {
         }
 
         String goodId = request.getParameter("goodId");
-        System.out.println("goodId: " + goodId);
         int id = user.getId();
         cartService.updateCart(id, goodId);
 

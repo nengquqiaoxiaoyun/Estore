@@ -18,7 +18,7 @@
         <input onclick="location.href='${root}/servlet/goods?methodName=listGoods';"
                type="button" value="继续购物" class="btn2"/>&nbsp;&nbsp;&nbsp;
 
-        <input onclick="location.href='${root}/cart.jsp';"
+        <input onclick="location.href='${root}/servlet/cart?methodName=listCart';"
                type="button" value="去购物车结算" class="btn"/>
     </div>
 </div>
