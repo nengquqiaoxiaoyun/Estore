@@ -2,7 +2,12 @@ package cn.web.service.impl;
 
 import cn.web.dao.CartDao;
 import cn.web.dao.impl.CartDaoImpl;
+import cn.web.entity.Cart;
 import cn.web.service.CartService;
+import cn.web.utils.JdbcUtils;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author: huakaimay
@@ -34,5 +39,60 @@ public class CartServiceImpl implements CartService {
         } else {
             updateCartNum(uid, gid);
         }
+    }
+
+    @Override
+    public List<Cart> listCartByUid(int uid) {
+        return cartDao.listCartByUid(uid);
+    }
+
+
+    @Override
+    public Cart listCartByGidAndUid(Cart cart) {
+        return cartDao.listCartByGidAndUid(cart);
+    }
+
+    @Override
+    public String updateCartNum(Cart cart) {
+        cartDao.updateCartNum(cart);
+        try {
+            JdbcUtils.getConnection().commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        List<Cart> carts = listCartByUid(cart.getUid());
+
+
+        // 购物金额
+        double total = 0d;
+        // 节省金额
+        double savePrice = 0d;
+        // 当前商品的小计
+        double totalPrice = 0d;
+        for (Cart ct : carts) {
+
+            int buynum = ct.getBuynum();
+            double marketprice = ct.getGood().getMarketprice();
+            double estoreprice = ct.getGood().getEstoreprice();
+
+
+            // 当前商品
+            if (ct.getGid() == cart.getGid()) {
+                // 小计
+                totalPrice = buynum * estoreprice;
+            }
+
+            total += estoreprice * buynum;
+            savePrice += buynum * (marketprice - estoreprice);
+        }
+
+
+        String json = "{\"total\":\"" + total + "\",\"totalPrice\":\"" + totalPrice + "\",\"savePrice\":\"" + savePrice + "\"}";
+
+        return json;
+
+
     }
 }

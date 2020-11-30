@@ -26,7 +26,7 @@ public abstract class BaseServlet extends HttpServlet {
             declaredMethod.setAccessible(true);
             declaredMethod.invoke(this, request, response);
         } catch (Exception e) {
-            throw new RuntimeException("服务器异常");
+            throw new RuntimeException(e);
         }
     }
 }

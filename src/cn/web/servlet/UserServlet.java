@@ -66,7 +66,7 @@ public class UserServlet extends BaseServlet {
 
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(30);
+            session.setMaxInactiveInterval(60 * 30);
             session.setAttribute("user", user);
 
             if ("on".equals(remember)) {

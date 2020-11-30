@@ -97,7 +97,7 @@
                 <li id="ECS_CARTINFO">
                     <div class="top_cart">
                         <img src="${root}/themes/ecmoban_jumei/images/cart.gif"/>
-                        <a href="${root}/cart.jsp" class="shopborder">去购物车结算</a>
+                        <a href="${root}/servlet/cart?methodName=listCart" class="shopborder">去购物车结算</a>
                     </div>
                 </li>
             </ul>

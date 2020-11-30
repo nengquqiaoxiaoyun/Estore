@@ -1,8 +1,10 @@
 package cn.web.servlet;
 
+import cn.web.entity.Cart;
 import cn.web.entity.User;
 import cn.web.service.CartService;
 import cn.web.service.impl.CartServiceImpl;
+import com.alibaba.fastjson.JSON;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author: huakaimay
@@ -42,6 +45,52 @@ public class CartServlet extends BaseServlet {
 
         response.sendRedirect(request.getContextPath() + "/buyorcart.jsp");
 
+    }
+
+    /**
+     * 查看购物车
+     */
+    public void listCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user != null) {
+            int id = user.getId();
+            List<Cart> carts = cartService.listCartByUid(id);
+            request.setAttribute("carts", carts);
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);
+        } else {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+    }
+
+    public void updateCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String inputVal = request.getParameter("inputVal");
+        String gid = request.getParameter("gid");
+
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            int id = user.getId();
+            Cart cart = new Cart();
+            cart.setGid(Integer.valueOf(gid));
+            cart.setUid(id);
+            cart.setBuynum(Integer.valueOf(inputVal));
+            String json = cartService.updateCartNum(cart);
+            response.getWriter().write(json);
+
+        } else {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
 
     }
 
