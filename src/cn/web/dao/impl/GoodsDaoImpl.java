@@ -26,4 +26,10 @@ public class GoodsDaoImpl extends BaseDao<Good> implements GoodsDao {
                 "where id = ?";
         return super.getBean(sql, id);
     }
+
+    @Override
+    public void updateGoods(int goodId, int num) {
+        String sql = "update goods set num = num - ? where id = ?";
+        super.update(sql, num, goodId);
+    }
 }

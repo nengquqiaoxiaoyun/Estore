@@ -36,5 +36,13 @@ public interface CartDao {
      */
     Cart listCartByGidAndUid(Cart cart);
 
+    /**
+     * 删除指定购物车
+     */
     void deleteCartByGid(int uid, String gid);
+
+    /**
+     * 删除指定用户的购物车
+     */
+    void deleteCartByUid(int uid);
 }

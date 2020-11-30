@@ -61,7 +61,6 @@ public class JdbcUtils {
      */
     public static void commit() {
         Connection connection = threadLocal.get();
-        System.out.println("进入过滤器");
         try {
             if (connection != null)
                 connection.commit();

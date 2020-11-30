@@ -19,4 +19,6 @@ public interface GoodsDao {
      * 根据id查询商品信息
      */
     Good getGoodDetail(String id);
+
+    void updateGoods(int goodId, int num);
 }

@@ -88,4 +88,10 @@ public class CartDaoImpl extends BaseDao<Cart> implements CartDao {
         super.update(sql, gid, uid);
         JdbcUtils.commit();
     }
+
+    @Override
+    public void deleteCartByUid(int uid) {
+        String sql = "delete from cart where uid = ?";
+        super.update(sql, uid);
+    }
 }

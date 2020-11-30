@@ -75,7 +75,7 @@
                             <td colspan="6" style="text-align:right;padding-right:10px;font-size:25px;">
                                 购物金额小计&nbsp;<font color="red" id="total">${totalPrice}</font>元，
                                 共为您节省了&nbsp;<font color="red" id="savePrice">${savePrice}</font>元
-                                <a href="${root}/orders_submit.jsp"><input value="去结算" type="button" class="btn"/></a>
+                                <a href="${root}/servlet/order?methodName=settle"><input value="去结算" type="button" class="btn"/></a>
                             </td>
                         </tr>
                     </table>
