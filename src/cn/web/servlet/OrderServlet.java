@@ -49,8 +49,6 @@ public class OrderServlet extends BaseServlet {
         List<Cart> carts = cartService.listCartByUid(id);
         request.setAttribute("carts", carts);
         request.getRequestDispatcher("/orders_submit.jsp").forward(request, response);
-
-
     }
 
     public void listPCDByPid(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -58,6 +56,21 @@ public class OrderServlet extends BaseServlet {
         List<PCD> pcds = pcdService.listPCDbyPid(pid);
         String json = JSON.toJSONString(pcds);
         response.getWriter().write(json);
+    }
+
+    public void listOrders(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        int id = user.getId();
+        List<Order> orders = orderService.listOrders(id);
+        request.setAttribute("orders", orders);
+        request.getRequestDispatcher("/orders.jsp").forward(request, response);
     }
 
     /**
@@ -98,8 +111,7 @@ public class OrderServlet extends BaseServlet {
         order.setUid(user.getId());
         orderService.subOrder(order);
 
-
-        request.getRequestDispatcher("/orders.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/servlet/order?methodName=listOrders");
 
     }
 

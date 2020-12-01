@@ -5,6 +5,8 @@ import cn.web.dao.OrderDao;
 import cn.web.entity.Order;
 import cn.web.entity.OrderItems;
 
+import java.util.List;
+
 /**
  * @author: huakaimay
  * @since: 2020-11-30
@@ -22,6 +24,13 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
     public void saveOrderItems(OrderItems orderItems) {
         String sql = "insert into orderitems (oid, gid, buynum) values (?, ?, ?)";
         super.update(sql,orderItems.getOid(), orderItems.getGid(), orderItems.getBuynum());
+    }
+
+    @Override
+    public List<Order> listOrders(int uid) {
+        String sql = "select id, uid, totalprice, address, status, createtime from orders " +
+                "where uid = ?";
+        return super.getBeanList(sql, uid);
     }
 
 }

@@ -71,7 +71,7 @@
                         </li>
                     </ul>
                     <div class="header_r">
-                        <a href="${root}/orders.jsp">我的订单</a>
+                        <a href="${root}/servlet/order?methodName=listOrders">我的订单</a>
                         <a href="${root}/servlet/goods?methodName=listGoods">商品列表</a>
                     </div>
                 </div>

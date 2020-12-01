@@ -30,14 +30,20 @@ public class OrderServiceImpl implements OrderService {
         List<Cart> carts = cartDao.listCartByUid(uid);
 
         saveOrder(order, carts);
-        updateGoodNum(order, carts);
+        updateGoodNum(carts);
         deleteCarts(uid);
         saveOrderItems(order, carts);
 
     }
 
+    @Override
+    public List<Order> listOrders(int uid) {
+        return orderDao.listOrders(uid);
+    }
+
     /**
      * 保存订单信息
+     *
      * @param order
      * @param carts
      */
@@ -62,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 跟新库存
      */
-    private void updateGoodNum(Order order, List<Cart> carts) {
+    private void updateGoodNum(List<Cart> carts) {
         for (Cart cart : carts) {
             int buynum = cart.getBuynum();
             goodsDao.updateGoods(cart.getGid(), buynum);
