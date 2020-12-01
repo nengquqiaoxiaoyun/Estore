@@ -35,8 +35,8 @@
                             <th bgcolor="#ffffff" width="160px">操作</th>
                         </tr>
 
-                        <c:if test="${not empty requestScope.carts}">
-                            <c:forEach items="${requestScope.carts}" var="cart">
+                        <c:if test="${not empty sessionScope.carts}">
+                            <c:forEach items="${sessionScope.carts}" var="cart">
                                 <tr>
                                     <td bgcolor="#ffffff" align="center" style="width:300px;">
                                         <!-- 商品图片 -->
@@ -75,7 +75,7 @@
                             <td colspan="6" style="text-align:right;padding-right:10px;font-size:25px;">
                                 购物金额小计&nbsp;<font color="red" id="total">${totalPrice}</font>元，
                                 共为您节省了&nbsp;<font color="red" id="savePrice">${savePrice}</font>元
-                                <a href="${root}/servlet/order?methodName=settle"><input value="去结算" type="button" class="btn"/></a>
+                                <a href="${root}/orders_submit.jsp"><input value="去结算" type="button" class="btn"/></a>
                             </td>
                         </tr>
                     </table>

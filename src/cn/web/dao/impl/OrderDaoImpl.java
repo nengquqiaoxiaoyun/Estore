@@ -23,7 +23,7 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
     @Override
     public void saveOrderItems(OrderItems orderItems) {
         String sql = "insert into orderitems (oid, gid, buynum) values (?, ?, ?)";
-        super.update(sql,orderItems.getOid(), orderItems.getGid(), orderItems.getBuynum());
+        super.update(sql, orderItems.getOid(), orderItems.getGid(), orderItems.getBuynum());
     }
 
     @Override
@@ -32,5 +32,19 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
                 "where uid = ?";
         return super.getBeanList(sql, uid);
     }
+
+    @Override
+    public Order getOrderDetail(int uid, String oid) {
+        String sql = "select id, uid, totalprice, address, status, createtime from orders " +
+                "where uid = ? and id = ?";
+        return super.getBean(sql, uid, oid);
+    }
+
+    @Override
+    public void delete(String oid) {
+        String sql = "delete from orders where id = ?";
+        super.update(sql, oid);
+    }
+
 
 }

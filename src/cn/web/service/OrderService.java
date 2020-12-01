@@ -19,4 +19,11 @@ public interface OrderService {
      * 查询用户的所有订单信息
      */
     List<Order> listOrders(int uid);
+
+    /**
+     * 查询用户的订单信息
+     */
+    Order getOrderDetail(int uid, String oid);
+
+    void cancel(String oid);
 }

@@ -83,7 +83,7 @@ public class CartServlet extends BaseServlet {
         if (user != null) {
             int id = user.getId();
             List<Cart> carts = cartService.listCartByUid(id);
-            request.setAttribute("carts", carts);
+            session.setAttribute("carts",carts);
             request.getRequestDispatcher("/cart.jsp").forward(request, response);
         } else {
             String referer = request.getHeader("referer");

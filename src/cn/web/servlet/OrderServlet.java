@@ -1,6 +1,5 @@
 package cn.web.servlet;
 
-import cn.web.entity.Cart;
 import cn.web.entity.Order;
 import cn.web.entity.PCD;
 import cn.web.entity.User;
@@ -15,14 +14,11 @@ import com.alibaba.fastjson.JSON;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author: huakaimay
@@ -30,26 +26,9 @@ import java.util.UUID;
  */
 @WebServlet(name = "OrderServlet", urlPatterns = "/servlet/order")
 public class OrderServlet extends BaseServlet {
-    private CartService cartService = new CartServiceImpl();
     private PCDService pcdService = new PCDServiceImpl();
     private OrderService orderService = new OrderServiceImpl();
 
-    public void settle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            String referer = request.getHeader("referer");
-            request.getSession().setAttribute("url", referer);
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-            return;
-        }
-
-        int id = user.getId();
-        List<Cart> carts = cartService.listCartByUid(id);
-        request.setAttribute("carts", carts);
-        request.getRequestDispatcher("/orders_submit.jsp").forward(request, response);
-    }
 
     public void listPCDByPid(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pid = request.getParameter("pid");
@@ -113,6 +92,43 @@ public class OrderServlet extends BaseServlet {
 
         response.sendRedirect(request.getContextPath() + "/servlet/order?methodName=listOrders");
 
+    }
+
+    public void orderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+        int id = user.getId();
+        String oid = request.getParameter("oid");
+        Order orderDetail = orderService.getOrderDetail(id, oid);
+        request.setAttribute("orderDetail", orderDetail);
+
+        request.getRequestDispatcher("/orders_detail.jsp").forward(request, response);
+    }
+
+    /**
+     * 取消订单的步骤
+     * 1. 删除中间表的信息（orderitems）
+     * 2. 还原商品数量
+     * 3. 删除订单表
+     */
+    public void cancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            String referer = request.getHeader("referer");
+            request.getSession().setAttribute("url", referer);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+        String oid = request.getParameter("oid");
+        orderService.cancel(oid);
+
+        response.sendRedirect("order?methodName=listOrders");
     }
 
 }

@@ -85,8 +85,8 @@
                                 <th width="15%" align="center">购买数量</th>
                                 <th align="center">小计</th>
                             </tr>
-                            <c:if test="${not empty carts}"></c:if>
-                            <c:forEach items="${carts}" var="cart">
+                            <c:if test="${not empty sessionScope.carts}"></c:if>
+                            <c:forEach items="${sessionScope.carts}" var="cart">
                                 <tr>
                                     <td>
                                         <a href="javascript:;" class="f6">${cart.good.name}</a>

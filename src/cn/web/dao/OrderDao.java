@@ -25,4 +25,17 @@ public interface OrderDao {
      * 查询用户的所有订单信息
      */
     List<Order> listOrders(int uid);
+
+    /**
+     * 查询用户的订单信息
+     */
+    Order getOrderDetail(int uid, String oid);
+
+
+    /**
+     * 删除订单
+     */
+    void delete(String oid);
+
+
 }

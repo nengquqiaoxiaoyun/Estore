@@ -3,9 +3,11 @@ package cn.web.service.impl;
 import cn.web.dao.CartDao;
 import cn.web.dao.GoodsDao;
 import cn.web.dao.OrderDao;
+import cn.web.dao.OrderItemsDao;
 import cn.web.dao.impl.CartDaoImpl;
 import cn.web.dao.impl.GoodsDaoImpl;
 import cn.web.dao.impl.OrderDaoImpl;
+import cn.web.dao.impl.OrderItemsDaoImpl;
 import cn.web.entity.Cart;
 import cn.web.entity.Order;
 import cn.web.entity.OrderItems;
@@ -23,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao = new OrderDaoImpl();
     private CartDao cartDao = new CartDaoImpl();
     private GoodsDao goodsDao = new GoodsDaoImpl();
+    private OrderItemsDao orderItemsDao = new OrderItemsDaoImpl();
 
     @Override
     public void subOrder(Order order) {
@@ -39,6 +42,32 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> listOrders(int uid) {
         return orderDao.listOrders(uid);
+    }
+
+    @Override
+    public Order getOrderDetail(int uid, String oid) {
+        Order order = orderDao.getOrderDetail(uid, oid);
+        List<OrderItems> orderItems = orderItemsDao.getOrderItemsByOid(oid);
+        order.setOiList(orderItems);
+        return order;
+    }
+
+    @Override
+    public void cancel(String oid) {
+        // 删除详情
+        orderItemsDao.delete(oid);
+
+        List<OrderItems> orderItemsList = orderItemsDao.getOrderItemsByOid(oid);
+        for (OrderItems orderItems : orderItemsList) {
+            int buynum = orderItems.getBuynum();
+            int gid = orderItems.getGid();
+            // 还原商品数量
+            goodsDao.restoreGoodsNum(gid, buynum);
+        }
+
+
+        orderDao.delete(oid);
+
     }
 
     /**

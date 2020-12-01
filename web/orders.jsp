@@ -54,14 +54,14 @@
                                     </td>
                                     <td align="center" bgcolor="#ffffff">
                                         <c:if test="${order.status==-1 }">
-                                            <a href="${root}/orders_detail.jsp">在线支付</a>&nbsp;
-                                            <a href="javascript:;">取消订单</a>
+                                            <a href="${root}/servlet/order?methodName=orderDetail&oid=${order.id}">在线支付</a>&nbsp;
+                                            <a href="${root}/servlet/order?methodName=cancel&oid=${order.id}">取消订单</a>
                                         </c:if>
                                         <c:if test="${order.status==1 }">
-                                            <font color="blue"><a href="${root}/orders_detail.jsp">查看详情</a></font>
+                                            <font color="blue"><a href="${root}/servlet/order?methodName=orderDetail&oid=${order.id}">查看详情</a></font>
                                         </c:if>
                                         <c:if test="${order.status==2 }">
-                                            <font color="blue"><a href="${root}/orders_detail.jsp">查看详情</a></font>
+                                            <font color="blue"><a href="${root}/servlet/order?methodName=orderDetail&oid=${order.id}">查看详情</a></font>
                                         </c:if>
                                     </td>
 

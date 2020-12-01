@@ -21,4 +21,6 @@ public interface GoodsDao {
     Good getGoodDetail(String id);
 
     void updateGoods(int goodId, int num);
+
+    void restoreGoodsNum(int goodId, int num);
 }
